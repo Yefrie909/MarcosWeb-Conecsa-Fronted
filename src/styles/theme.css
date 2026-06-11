@@ -1,7 +1,6 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-
   --font-size: 16px;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
@@ -129,11 +128,22 @@
     @apply bg-background text-foreground;
   }
 
-  /**
-  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
-  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
-  */
+  /* --- REGLAS ANTIDOTO PARA ENLACES (BOOTSTRAP FIX) --- */
+  a {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
 
+  a:hover {
+    text-decoration: underline !important;
+    color: #4682B4 !important; /* Fuerza tu color azul de CONECSA en hover global */
+  }
+  /* ----------------------------------------------------- */
+.group:hover .absolute {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
   html {
     font-size: var(--font-size);
   }

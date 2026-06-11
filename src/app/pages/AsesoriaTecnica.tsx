@@ -1,7 +1,7 @@
 import { Headphones, Mail, Phone, MessageCircle, HelpCircle, Send, Clock } from "lucide-react";
 import { useState } from "react";
 
-export function SoporteTecnico() {
+export function AsesoriaTecnica() {
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",

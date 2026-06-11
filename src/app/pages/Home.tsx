@@ -1,4 +1,24 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router";
+// @ts-ignore
+import productoSaneamientoImg from '@/assets/Home/ProductoSaneaminto.png';
+// @ts-ignore
+import asesoriaTecnicaGif from '@/assets/Home/AsesoriaTecnica.gif';
+// @ts-ignore
+import bolsaTrabajoGif from '@/assets/Home/BolsadeTrabajo.gif'; 
+// @ts-ignore
+import VentaalpormayorGif from '@/assets/Home/Ventaalpormayor.gif'; 
+// @ts-ignore
+import CotizatuproductoImg  from '@/assets/Home/Cotizatuproducto.png'; 
+// @ts-ignore
+import PedidosImg from '@/assets/Home/Pedidos.png'; 
+// @ts-ignore
+import EquipoImg from '@/assets/Slides/Equipo.jpg';
+// @ts-ignore
+import AlmacenImg from '@/assets/Slides/Almacen.jpg';
+// @ts-ignore
+import UbicacionImg from '@/assets/Slides/Ubicacion.png';
+
 import { 
   FileText, 
   Users, 
@@ -9,57 +29,96 @@ import {
   ArrowRight,
   Construction,
   Calendar,
-  Image,
-  MapPin
+  MapPin,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 export function Home() {
+  // --- LÓGICA DEL HERO SLIDER ---
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      id: 1,
+      image: EquipoImg, 
+      hasContent: true // <-- Activado en true para que muestre el título y botones en la primera imagen
+    },
+    {
+      id: 2,
+      image: AlmacenImg,
+      hasContent: false // Vacío
+    },
+    {
+      id: 3,
+      image: UbicacionImg,
+      hasContent: false // Vacío
+    }
+  ];
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+
+  // Cambio automático y optimizado cada 7 segundos (Se reinicia al cambiar manualmente para evitar saltos dobles)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 7000); 
+    return () => clearInterval(timer);
+  }, [currentSlide]);
+  // ------------------------------
+
   const services = [
-  {
-    icon: Users,
-    title: "Productos Saneamiento",
-    description: "Soluciones en agua, desagüe y equipamiento sanitario",
-    link: "/desarrollo-social",
-    color: "bg-blue-500",
-    
-  },
-  {
-    icon: FileText,
-    title: "Pedidos",
-    description: "Realiza y gestiona tus pedidos de forma rápida y segura",
-    link: "/documentos-normativos",
-    color: "bg-green-500"
-  },
-  {
-    icon: Building,
-    title: "Cotiza tu Producto",
-    description: "Solicita cotizaciones personalizadas según tu proyecto",
-    link: "/documentos-gestion",
-    color: "bg-purple-500"
-  },
-  {
-    icon: Book,
-    title: "Venta al por Mayor",
-    description: "Precios especiales para compras en grandes cantidades",
-    link: "/libro-reclamaciones",
-    color: "bg-orange-500"
-  },
-  {
-    icon: Headphones,
-    title: "Asesoría Técnica",
-    description: "Soporte profesional para instalación y uso de productos",
-    link: "/soporte-tecnico",
-    color: "bg-cyan-500"
-  },
-  {
-    icon: Eye,
-    title: "Bolsa de Trabajo",
-    description: "Únete a nuestro equipo y crece con nosotros",
-    link: "/portal-transparencia",
-    color: "bg-red-500"
-  }
-];
+    {
+      icon: Users,
+      title: "Productos Saneamiento",
+      description: "Soluciones en agua, desagüe y equipamiento sanitario",
+      link: "/productos-saneamiento",
+      color: "bg-blue-500",
+      backgroundImage: productoSaneamientoImg, 
+    },
+    {
+      icon: FileText,
+      title: "Pedidos",
+      description: "Realiza y gestiona tus pedidos de forma rápida y segura",
+      link: "/pedidos",
+      color: "bg-green-500",
+      backgroundImage: PedidosImg, 
+    },
+    {
+      icon: Building,
+      title: "Cotiza tu Producto",
+      description: "Solicita cotizaciones personalizadas según tu proyecto",
+      link: "/cotiza-tu-producto",
+      color: "bg-purple-500",
+      backgroundImage: CotizatuproductoImg,
+    },
+    {
+      icon: Book,
+      title: "Venta al por Mayor",
+      description: "Precios especiales para Constructoras,Empresas,Municipalidades y Consorcios",
+      link: "/ventas-al-por-mayor",
+      color: "bg-orange-500",
+      backgroundImage: VentaalpormayorGif,
+    },
+    {
+      icon: Headphones,
+      title: "Asesoría Técnica",
+      description: "Soporte profesional para instalación y uso de productos",
+      link: "/asesoria-tecnica",
+      color: "bg-cyan-500",
+      backgroundImage: asesoriaTecnicaGif, 
+    },
+    {
+      icon: Eye,
+      title: "Bolsa de Trabajo",
+      description: "Únete a nuestro equipo y crece con nosotros",
+      link: "/bolsa-de-trabajo",
+      color: "bg-red-500",
+      backgroundImage: bolsaTrabajoGif, 
+    }
+  ];
 
   const news = [
     {
@@ -76,7 +135,7 @@ export function Home() {
       category: "Salud",
       date: "25 de Marzo, 2026",
       image: "https://images.unsplash.com/photo-1687111731852-5cb9788dce27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBkZXZlbG9wbWVudCUyMHNvY2lhbCUyMHByb2dyYW1zfGVufDF8fHx8MTc3NTI1NTI4MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      description: "La municipalidad inicia campaña de vacunación gratuita para niños y adultos mayores en todos los centros de salud del distrito."
+      description: "La municipalidad inicia campaña de vacunación gratuita para niños y adultos mayores en todos los centers de salud del distrito."
     },
     {
       id: 3,
@@ -98,24 +157,79 @@ export function Home() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative h-[500px] bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1647403630807-aaef3a9ab7bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxIdWFuY2F5byUyMFBlcnUlMjBjaXR5JTIwbGFuZHNjYXBlfGVufDF8fHx8MTc3NTI1NTI4MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-          <div className="text-white max-w-2xl">
-            <h1 className="text-4xl md:text-5xl mb-4">Bienvenidos a la Municipalidad Distrital de El Tambo</h1>
-            <p className="text-xl mb-8">Trabajando juntos por un distrito moderno, inclusivo y próspero</p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/portal-transparencia" className="bg-[#c41e3a] hover:bg-[#a01830] text-white px-6 py-3 rounded-md transition inline-flex items-center gap-2">
-                Portal de Transparencia
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link to="/noticias" className="bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-md transition inline-flex items-center gap-2">
-                Ver Noticias
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+      {/* Hero Section con Slider Integrado y Zoom (Ken Burns Effect) */}
+      <section className="relative h-[500px] w-full overflow-hidden bg-gray-950">
+        {slides.map((slide, index) => {
+          const isActive = index === currentSlide;
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              {/* Contenedor independiente de la imagen para aplicar el Zoom sin alterar los textos */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform ease-out"
+                style={{
+                  backgroundImage: `url('${slide.image}')`,
+                  // Hace un zoom suave de 8% (scale(1.08)) en 7 segundos solo si está activo
+                  transform: isActive ? 'scale(1.08)' : 'scale(1)',
+                  transitionDuration: isActive ? '7000ms' : '0ms',
+                }}
+              ></div>
+
+              {/* Capa oscura para contrastar contenido */}
+              <div className="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+
+              {/* Renderizado condicional del contenido */}
+              {slide.hasContent && (
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center z-20">
+                  <div className="text-white max-w-2xl">
+                    <h1 className="text-4xl md:text-5xl mb-4 font-bold">Bienvenidos a la Municipalidad Distrital de El Tambo</h1>
+                    <p className="text-xl mb-8">Trabajando juntos por un distrito moderno, inclusivo y próspero</p>
+                    <div className="flex flex-wrap gap-4">
+                      <Link to="/portal-transparencia" className="bg-[#c41e3a] hover:bg-[#a01830] text-white px-6 py-3 rounded-md transition inline-flex items-center gap-2">
+                        Portal de Transparencia
+                        <ArrowRight className="w-5 h-5" />
+                      </Link>
+                      <Link to="/noticias" className="bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-md transition inline-flex items-center gap-2">
+                        Ver Noticias
+                        <ArrowRight className="w-5 h-5" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          );
+        })}
+
+        {/* Controles del Slider (Flechas traslúcidas con z-30 para prioridad de click) */}
+        <button 
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-30"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button 
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-30"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Indicadores inferiores (Puntitos con z-30) */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-2 rounded-full transition-all ${
+                index === currentSlide ? 'w-8 bg-[#c41e3a]' : 'w-2 bg-white/50'
+              }`}
+            />
+          ))}
         </div>
       </section>
 
@@ -123,7 +237,7 @@ export function Home() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl mb-4">Nuestros Servicios</h2>
+            <h2 className="text-3xl mb-4 font-bold">Nuestros Servicios</h2>
             <p className="text-gray-600">Accede a la información y servicios que necesitas</p>
           </div>
 
@@ -132,13 +246,30 @@ export function Home() {
               <Link
                 key={index}
                 to={service.link}
-                className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition group"
+                className={`p-6 rounded-lg shadow-md hover:shadow-xl transition group min-h-[220px] flex flex-col justify-between relative overflow-hidden ${
+                  service.backgroundImage ? 'text-white' : 'bg-white'
+                }`}
+                style={
+                  service.backgroundImage
+                    ? {
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75)), url(${service.backgroundImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }
+                    : {}
+                }
               >
-                <div className={`w-12 h-12 ${service.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition`}>
-                  <service.icon className="w-6 h-6 text-white" />
+                <div>
+                  <div className={`w-12 h-12 ${service.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition`}>
+                    <service.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className={`text-xl mb-2 transition ${service.backgroundImage ? 'group-hover:text-gray-200' : 'group-hover:text-[#c41e3a]'}`}>
+                    {service.title}
+                  </h3>
+                  <p className={service.backgroundImage ? 'text-gray-200 text-sm' : 'text-gray-600 text-sm'}>
+                    {service.description}
+                  </p>
                 </div>
-                <h3 className="text-xl mb-2 group-hover:text-[#c41e3a] transition">{service.title}</h3>
-                <p className="text-gray-600 text-sm">{service.description}</p>
               </Link>
             ))}
           </div>
@@ -150,8 +281,8 @@ export function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-12">
             <div>
-              <h2 className="text-3xl mb-2">Noticias y Actividades</h2>
-              <p className="text-gray-600">Mantente informado sobre nuestras obras y programas</p>
+              <h2 className="text-3xl mb-2 font-bold">Marcas</h2>
+              <p className="text-gray-600">Respaldamos tus proyectos con las mejores marcas del mercado</p>
             </div>
             <Link to="/noticias" className="text-[#c41e3a] hover:underline flex items-center gap-2">
               Ver todas

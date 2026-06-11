@@ -1,6 +1,7 @@
 import { Link } from "react-router";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User } from "lucide-react";
 import { useState } from "react";
+import Logo from '../../assets/Marcas/Logo.png';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -9,70 +10,79 @@ export function Header() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="bg-[#c41e3a] text-white py-2">
+      <div className="bg-[#4682B4] text-white py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center text-sm">
-            <span>CONECSA</span>
+            <span></span>
             <span>Teléfono: (064) 248-000</span>
           </div>
         </div>
       </div>
 
       {/* Main Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-16 h-16 bg-[#c41e3a] rounded-full flex items-center justify-center">
-              <span className="text-white text-xl">🏛️</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-[#c41e3a]">CONECSA SAC</h1>
-              <p className="text-sm text-gray-600">Central</p>
-            </div>
+      <div className="w-full px-4 sm:px-6 lg:px-8"> 
+        <div className="flex justify-between items-center h-20">
+          
+          {/* Logo oficial */}
+          <Link to="/" className="flex items-center h-full">
+            <img 
+              src={Logo} 
+              alt="Logo CONECSA SAC" 
+              className="h-full w-auto object-cover" 
+            />
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-6">
-            <Link to="/" className="text-gray-700 hover:text-[#c41e3a] transition">
+            <Link to="/" className="text-gray-700 hover:text-[#4682B4] transition">
               Inicio
             </Link>
-            <Link to="/noticias" className="text-gray-700 hover:text-[#c41e3a] transition">
+            <Link to="/noticias" className="text-gray-700 hover:text-[#4682B4] transition">
               Noticias
             </Link>
 
-            {/* Services Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 text-gray-700 hover:text-[#c41e3a] transition">
+            {/* Services Dropdown (Apertura Automática con Hover) */}
+            <div className="relative group py-2">
+              <button className="flex items-center gap-1 text-gray-700 hover:text-[#4682B4] transition bg-transparent border-0 cursor-pointer">
                 Servicios <ChevronDown className="w-4 h-4" />
               </button>
-              <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                
-                {/* ¡CORREGIDO MENÚ ESCRITORIO! */}
-                <Link to="/productos-saneamiento" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Productos Saneamiento
-                </Link>
-                
-                <Link to="/documentos-normativos" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Documentos Normativos
-                </Link>
-                <Link to="/documentos-gestion" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Documentos de Gestión
-                </Link>
-                <Link to="/libro-reclamaciones" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Libro de Reclamaciones
-                </Link>
-                <Link to="/soporte-tecnico" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                  Soporte Técnico
-                </Link>
+              
+              {/* Contenedor con puente invisible pt-3 para evitar cortes de hover */}
+              <div className="absolute top-full left-0 pt-3 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="bg-white shadow-lg rounded-md py-1 border border-gray-100">
+                  <Link to="/productos-saneamiento" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+                    Productos Saneamiento
+                  </Link>
+                  <Link to="/pedidos" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+                    Pedidos
+                  </Link>
+                  <Link to="/cotiza-tu-producto" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+                    Cotiza tu Producto
+                  </Link>
+                  <Link to="/ventas-al-por-mayor" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+                    Venta al por Mayor
+                  </Link>
+                  <Link to="/asesoria-tecnica" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+                    Asesoría Técnica
+                  </Link>
+                  <Link to="/bolsa-de-trabajo" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+                    Bolsa de Trabajo
+                  </Link>
+                </div>
               </div>
             </div>
 
-            <Link to="/admin/login" className="text-gray-700 hover:text-[#c41e3a] transition">
+            <Link to="/admin/login" className="text-gray-700 hover:text-[#4682B4] transition">
               Administrador
             </Link>
-            <Link to="/portal-transparencia" className="bg-[#c41e3a] text-white px-4 py-2 rounded-md hover:bg-[#a01830] transition">
-              Portal de Transparencia
+
+            {/* Enlace Iniciar Sesión para Escritorio */}
+            <Link 
+              to="/login" 
+              className="flex items-center gap-1.5 bg-[#4682B4] hover:bg-[#356a94] text-white px-4 py-2 rounded-md font-medium transition"
+            >
+              <User className="w-4 h-4" />
+              Iniciar Sesión
             </Link>
           </nav>
 
@@ -85,43 +95,56 @@ export function Header() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="lg:hidden pb-4 space-y-2">
-            <Link to="/" className="block py-2 text-gray-700 hover:text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/" className="block py-2 text-gray-700 hover:text-[#4682B4]" onClick={() => setMobileMenuOpen(false)}>
               Inicio
             </Link>
-            <Link to="/noticias" className="block py-2 text-gray-700 hover:text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/noticias" className="block py-2 text-gray-700 hover:text-[#4682B4]" onClick={() => setMobileMenuOpen(false)}>
               Noticias
             </Link>
 
-            {/* Mobile Services Dropdown */}
-            <div>
-              <button onClick={() => setServicesOpen(!servicesOpen)} className="flex items-center justify-between w-full py-2 text-gray-700 hover:text-[#c41e3a]">
-                Servicios <ChevronDown className={`w-4 h-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {servicesOpen && (
-                <div className="pl-4 space-y-2 mt-2">
-                  
-                  {/* ¡CORREGIDO MENÚ MÓVIL! */}
-                  <Link to="/productos-saneamiento" className="block py-2 text-gray-600 hover:text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
-                    Productos Saneamiento
-                  </Link>
-                  
-                  <Link to="/documentos-normativos" className="block py-2 text-gray-600 hover:text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
-                    Documentos Normativos
-                  </Link>
-                  <Link to="/documentos-gestion" className="block py-2 text-gray-600 hover:text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
-                    Documentos de Gestión
-                  </Link>
-                  <Link to="/libro-reclamaciones" className="block py-2 text-gray-600 hover:text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
-                    Libro de Reclamaciones
-                  </Link>
-                  <Link to="/soporte-tecnico" className="block py-2 text-gray-600 hover:text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
-                    Soporte Técnico
-                  </Link>
-                </div>
-              )}
-            </div>
-            <Link to="/portal-transparencia" className="block py-2 text-[#c41e3a]" onClick={() => setMobileMenuOpen(false)}>
-              Portal de Transparencia
+            {/* Services Dropdown (Control remoto por CSS) */}
+<div className="relative group py-2">
+  <button className="flex items-center gap-1 text-gray-700 hover:text-[#4682B4] transition bg-transparent border-0 cursor-pointer">
+    Servicios <ChevronDown className="w-4 h-4" />
+  </button>
+  
+  {/* Contenedor con espacio pt-3 para hacer el puente invisible */}
+  <div className="absolute top-full left-0 pt-3 w-56 hidden opacity-0 invisible transition-all duration-200 z-50">
+    <div className="bg-white shadow-lg rounded-md py-1 border border-gray-100">
+      <Link to="/productos-saneamiento" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+        Productos Saneamiento
+      </Link>
+      <Link to="/pedidos" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+        Pedidos
+      </Link>
+      <Link to="/cotiza-tu-producto" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+        Cotiza tu Producto
+      </Link>
+      <Link to="/ventas-al-por-mayor" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+        Venta al por Mayor
+      </Link>
+      <Link to="/asesoria-tecnica" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+        Asesoría Técnica
+      </Link>
+      <Link to="/bolsa-de-trabajo" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+        Bolsa de Trabajo
+      </Link>
+    </div>
+  </div>
+</div>
+
+            <Link to="/admin/login" className="block py-2 text-gray-700 hover:text-[#4682B4]" onClick={() => setMobileMenuOpen(false)}>
+              Administrador
+            </Link>
+
+            {/* Enlace Iniciar Sesión para Menú Móvil */}
+            <Link 
+              to="/login" 
+              className="flex items-center justify-center gap-2 w-full py-2.5 mt-2 text-center bg-[#4682B4] hover:bg-[#356a94] text-white rounded-md font-medium" 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <User className="w-4 h-4" />
+              Iniciar Sesión
             </Link>
           </nav>
         )}

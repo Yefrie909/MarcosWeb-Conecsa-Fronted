@@ -1,53 +1,67 @@
 import { createBrowserRouter } from "react-router";
-import { Root } from "./components/Root";
+
+// CORREGIDO: Ruta exacta basada en tu árbol de carpetas real
+import { Root } from "./components/Root"; 
+
+// CORREGIDO: Se eliminan extensiones .tsx innecesarias para evitar conflictos con Vite
+import { NotFound } from "./pages/NotFound";
 import { Home } from "./pages/Home";
 import { Noticias } from "./pages/Noticias";
-import { DocumentosNormativos } from "./pages/DocumentosNormativos";
-import { ProductosSaneamiento } from "./pages/ProductosSaneamiento"; // <-- Tu archivo real
-import { DocumentosGestion } from "./pages/DocumentosGestion";
-import { LibroReclamaciones } from "./pages/LibroReclamaciones";
-import { SoporteTecnico } from "./pages/SoporteTecnico";
-import { PortalTransparencia } from "./pages/PortalTransparencia";
-import { NotFound } from "./pages/NotFound";
+import { Pedidos } from "./pages/Pedidos"; 
+import { ProductosSaneamiento } from "./pages/ProductosSaneamiento"; 
+import { AsesoriaTecnica } from "./pages/AsesoriaTecnica";
+import { BolsadeTrabajo } from "./pages/BolsadeTrabajo";
+import { CotizatuProducto } from "./pages/CotizatuProducto";
+import { VentasalporMayor } from "./pages/VentasalporMayor"; 
 
-/* ADMIN */
+// CORREGIDO: Ruta directa al Login y Register de usuario
+import { Login as LoginCliente } from "./pages/Login";
+
+/* SECCIÓN PANEL DE ADMINISTRACIÓN */
+// CORREGIDO: Removidas las extensiones .tsx explícitas que rompen el empaquetado de Vite
 import Login from "./admin/pages/Login";
 import { Dashboard } from "./admin/pages/Dashboard"; 
 import Productos from "./admin/pages/Productos";
 import Usuarios from "./admin/pages/Usuarios";
-import { Pedidos } from "./admin/pages/Pedidos"; 
 import { AdminLayout } from "./admin/componentes/AdminLayout";
+import { Pedidos as AdminPedidos } from "./admin/pages/Pedidos"; 
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: Root, // Reestablecido con la "C" mayúscula correcta
+    element: <Root />, 
     children: [
-      { index: true, Component: Home },
-      { path: "noticias", Component: Noticias },
-      { path: "documentos-normativos", Component: DocumentosNormativos },
+      { index: true, element: <Home /> },
+      { path: "noticias", element: <Noticias /> },
+      { path: "pedidos", element: <Pedidos /> },
+      { path: "asesoria-tecnica", element: <AsesoriaTecnica /> },
+      { path: "bolsa-de-trabajo", element: <BolsadeTrabajo /> },
+      { path: "cotiza-tu-producto", element: <CotizatuProducto /> },
+      { path: "ventas-al-por-mayor", element: <VentasalporMayor /> },
+      { path: "desarrollo-social", element: <ProductosSaneamiento /> }, 
+      { path: "productos-saneamiento", element: <ProductosSaneamiento /> }, 
       
-      // SOLUCIÓN FINAL: Soportamos las dos palabras con la mayúscula original
-      { path: "desarrollo-social", Component: ProductosSaneamiento }, 
-      { path: "productos-saneamiento", Component: ProductosSaneamiento }, 
+      // NUEVO: Ruta configurada para que responda al Header como "/login"
+      { path: "login", element: <LoginCliente /> }, 
       
-      { path: "documentos-gestion", Component: DocumentosGestion },
-      { path: "libro-reclamaciones", Component: LibroReclamaciones },
-      { path: "soporte-tecnico", Component: SoporteTecnico },
-      { path: "portal-transparencia", Component: PortalTransparencia },
-
-      /* LOGIN */
-      { path: "admin/login", Component: Login },
-
-      /* PANEL ADMIN */
-      { path: "admin", Component: AdminLayout, children: [
-          { path: "dashboard", Component: Dashboard },
-          { path: "productos", Component: Productos },
-          { path: "usuarios", Component: Usuarios },
-          { path: "pedidos", Component: Pedidos },
-        ],
-      },
-      { path: "*", Component: NotFound },
+      // NUEVO: Ruta añadida para el registro público de usuarios
+      
+      { path: "admin/login", element: <Login /> },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "productos", element: <Productos /> },
+      { path: "usuarios", element: <Usuarios /> },
+      { path: "pedidos", element: <AdminPedidos /> }, 
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);

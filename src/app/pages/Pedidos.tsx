@@ -1,7 +1,7 @@
 import { FileText, Download, Search, Calendar } from "lucide-react";
 import { useState } from "react";
 
-export function DocumentosNormativos() {
+export function Pedidos() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedYear, setSelectedYear] = useState("2026");
 
